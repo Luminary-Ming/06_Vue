@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 
+        通过 script 标签引入 Vue3 的 js 库代码，使当前页面能够使用 Vue 
+        Vue 的核心思想：不操作 dom，通过数据的变化来更新 dom （数据驱动双向绑定）
+        Vue 是一个基于 MVVM 模式数据驱动页面的框架。
+    -->
+    <script src="./vue/vue.js"></script>
+</head>
+
+<body>
+    <!-- 视图区域：用于展示数据的页面基本结构 -->
+    <div id="app">
+        <!-- {{ }} 插值表达式，给页面上插入数据 -->
+        <div>{{ message }}</div>
+        <button @click="add">加+1</button>
+        <ul>
+            <!-- item 每一个对象 -->
+            <li v-for="item in users">
+                姓名：{{item.username}} 年龄：{{item.age}} 性别：{{item.sex}}
+            </li>
+        </ul>
+        <input type="text" v-model="address">
+    </div>
+
+    <script>
+        // 使用 Vue 中的 createApp() 函数创建一个 Vue 对象（实例）
+        const app = Vue.createApp({
+            // data() 函数定义在 Vue 实例中，存放页面上可用的数据
+            data() {
+                return {
+                    message: "hello,你好",
+                    a: 10,
+                    b: 20,
+                    users: [
+                        { username: "yasuo", age: 20, sex: "男" },
+                        { username: "mangseng", age: 21, sex: "男" },
+                        { username: "jiansheng", age: 22, sex: "男" },
+                        { username: "xiaochou", age: 23, sex: "男" },
+                        { username: "jianji", age: 24, sex: "女" }
+                    ],
+                    address: ""
+                }
+            },
+            // 配置函数
+            methods: {
+                add() {
+                    // this 指向该 Vue 的对象
+                    console.log(this.a++);
+                    this.users.push({ username: "xxx", age: 18, sex: "x" });
+                }
+            },
+            // 侦听器
+            watch: {
+                address(newValue, oldValue) {
+                    console.log(newValue, oldValue);
+                }
+            }
+        });
+        // 将 Vue 与页面绑定
+        app.mount("#app");
+    </script>
+</body>
+
+</html>

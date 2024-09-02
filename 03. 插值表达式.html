@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 
+        通过 script 标签引入 Vue3 的 js 库代码，使当前页面能够使用 Vue 
+        Vue 的核心思想：不操作 dom，通过数据的变化来更新 dom （数据驱动双向绑定）
+        Vue 是一个基于 MVVM 模式数据驱动页面的框架。
+    -->
+    <script src="./vue/vue.js"></script>
+</head>
+
+<body>
+    <!-- 视图区域：用于展示数据的页面基本结构 -->
+    <div id="app">
+        <!-- 
+            {{ }} 插值表达式，给页面上插入数据 
+                中间的值可以写常量、data 中的变量、表达式、Vue 提供的函数
+        -->
+        <div>{{ 123 }}</div>
+        <div>{{ 4 + 7 }}</div>
+        <div>name：{{ name }}</div>
+        <div>{{ 10 % 2 ? "奇数" : "偶数" }}</div>
+        <div>{{ demo() }}</div>
+        <div>{{ demo2() }}</div>
+    </div>
+
+    <script>
+        // 使用 Vue 中的 createApp() 函数创建一个 Vue 对象（实例）
+        const app = Vue.createApp({
+            // data() 函数定义在 Vue 实例中，存放页面上可用的数据
+            data() {
+                return {
+                    name: "yasuo"
+                }
+            },
+            // 配置函数
+            methods: {
+                // 定义函数
+                demo: function () {
+                    return "demo123456";
+                },
+                // 可以简化书写
+                demo2() {
+                    return "abcd1234";
+                }
+            }
+        });
+        // 将 Vue 与页面绑定
+        app.mount("#app");
+    </script>
+</body>
+
+</html>

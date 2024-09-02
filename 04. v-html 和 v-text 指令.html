@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./vue/vue.js"></script>
+</head>
+
+<body>
+    <!-- 视图区域：用于展示数据的页面基本结构 -->
+    <div id="app">
+        <p>哈哈哈哈哈{{ msg }}哈哈哈哈</p>
+        <!--
+            Vue 中的指令： 是指以 v- 开头做前缀的特殊属性
+               v-text ：属性值替代标签中的文本内容，若属性值中包含 html 代码，html 代码不会被解析。
+               v-html ：属性值替代标签中的文本内容，若属性值中包含 html 代码，html 代码会被解析。
+        -->
+        <p v-text="msg">哈哈哈哈哈哈哈哈哈哈哈哈哈哈</p>
+        <p v-html="msg">哈哈哈哈哈哈哈哈哈哈哈哈哈哈</p>
+    </div>
+    <script>
+        // 创建 Vue 实例
+        const app = Vue.createApp({
+            data() {
+                return {
+                    msg: "---今天天气<b style='color: red;'>真不错啊</b>---"
+                }
+            }
+        });
+        // 将 Vue 与页面绑定
+        app.mount("#app");
+    </script>
+</body>
+
+</html>

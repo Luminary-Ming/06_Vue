@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./vue/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <form action="#">
+            <!--
+                v-model 的修饰符：
+                    .lazy     监听 change 事件，而不是 input 事件，等输入框输入内容后，光标离开才会触发
+                    .number   将输入的合法字符转为数字，不能限制用户输入非数字内容
+                    .trim     移除输入内容的两端空格 
+            -->
+            <p>账号：<input type="text" placeholder="账号" v-model.trim="account"></p>
+            <p>密码：<input type="password" placeholder="密码" v-model.trim="password"></p>
+            <p>年龄：<input type="text" placeholder="密码" v-model.number="age"></p>
+            <p>性别：
+                <input type="radio" v-model="sex" value="男"> 男
+                <input type="radio" v-model="sex" value="女"> 女
+            </p>
+            <p>爱好：
+                <input type="checkbox" v-model="like" value="唱"> 唱
+                <input type="checkbox" v-model="like" value="跳"> 跳
+                <input type="checkbox" v-model="like" value="rap"> rap
+            </p>
+            <p>地址：
+                <select v-model="address">
+                    <option value="北京">北京</option>
+                    <option value="天津">天津</option>
+                    <option value="上海">上海</option>
+                </select>
+            </p>
+            <p>描述：
+                <textarea v-model="desc"></textarea>
+            </p>
+        </form>
+        <button @click="showData">修改</button>
+    </div>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    account: "zhangsan",
+                    password: "",
+                    age: 20,
+                    sex: "",
+                    like: [],
+                    address: "",
+                    desc: ""
+                }
+            },
+            methods: {
+                showData() {
+                    // 如果需要使用 vue 实例中的其他数据，必须使用 this. 的方式
+                    this.account = "yasuo";
+                    this.password = "123";
+                    this.sex = "男";
+                    this.like = ["跳", "rap"];
+                    this.address = "天津";
+                    this.desc = "自我介绍";
+                }
+            }
+        });
+
+        app.mount("#app");
+    </script>
+</body>
+
+</html>

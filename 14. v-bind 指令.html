@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./vue/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!--
+            v-bind 指令让标签的属性名或者属性值变为动态数据
+                语法：
+                v-bind:属性名="属性值"
+                其中 v-bind 可以省略  
+        -->
+        <p v-bind:username="username" :age="age" :sex="sex"></p>
+        <button @click="changeImg">切换图片</button>
+        <img v-bind:src="img" width="20%">
+        <!-- <p neude="东软天津">111</p> -->
+        <p v-bind:[attr_name]="attrValue">111</p>
+    </div>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    username: "亚索",
+                    age: 20,
+                    sex: "男",
+                    img: "./img/小汤.jpg",
+                    attr_name: "neude",
+                    attrValue: "东软天津",
+                    flag: true
+                }
+            },
+            methods: {
+                changeImg() {
+                    if (this.flag) {
+                        console.log(this.flag);
+                        this.img = "./img/小汤.jpg";
+                    } else {
+                        console.log(this.flag);
+                        this.img = "./img/雾岛真名.png";
+                    }
+                    this.flag = !this.flag
+                }
+            }
+        });
+        app.mount("#app");
+    </script>
+
+</body>
+
+</html>

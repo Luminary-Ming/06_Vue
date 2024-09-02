@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./vue/vue.js"></script>
+    <style>
+        table {
+            /* 边框合并 */
+            border-collapse: collapse;
+            margin: 50px;
+        }
+
+        th,
+        td {
+            border: 1px solid #0af;
+            padding: 10px 30px;
+            text-align: center;
+        }
+
+        .count {
+            width: 25px;
+            height: 20px;
+            border: 0;
+            color: aliceblue;
+            background-color: rgb(253, 171, 7);
+            cursor: pointer;
+        }
+
+        .del {
+            width: 50px;
+            height: 25px;
+            border: 0;
+            color: aliceblue;
+            background-color: rgb(255, 0, 76);
+            cursor: pointer;
+        }
+
+        /* 使用 :disabled 伪类来设置按钮被禁用时的样式 */
+        button:disabled {
+            background-color: gray;
+            color: rgb(2, 2, 2);
+            /* 禁用时的鼠标光标样式 */
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <table>
+            <tr>
+                <th><input type="checkbox" v-model="isCheckedAll" @change="checkedAllFn()"></th>
+                <th>名称</th>
+                <th>价格</th>
+                <th>数量</th>
+                <th>小计</th>
+                <th>操作</th>
+            </tr>
+            <tr v-for="(item, index) in heroArr" v-bind:key="index">
+                <td><input type="checkbox" v-model="item.isChecked" @change="singleCheckFn()"></td>
+                <td>{{ item.name }}</td>
+                <td>{{ item.price }}</td>
+                <td>
+                    <!-- 
+                        disabled 属性：作用是决定表单元素（输入框、按钮、选择框等）是否被禁用。
+                            当一个表单元素被禁用时：
+                                1. 视觉变化：元素变成灰色，以提示用户该元素不可用。
+                                2. 交互限制：用户无法操作该元素，包括点击、输入文本或选择选项第操作。
+                                3. 数据提交：对于表单来说，被禁用的元素不会包含在提交的数据中。
+                            在 disabled 的属性值中需要传递一个布尔值，true 表示禁用，反之不禁用。
+                    -->
+                    <button class="count" @click="item.count--" :disabled="item.count <= 1">-</button>
+                    &ensp;{{ item.count }}&ensp;
+                    <button class="count" @click="item.count++">+</button>
+                </td>
+                <td>{{ item.price * item.count }}</td>
+                <td><button class="del" @click="del(index)" :disabled="item.isChecked">删除</button></td>
+            </tr>
+            <tr>
+                <td>总价</td>
+                <td colspan="5">{{ totalPrice }}</td>
+            </tr>
+        </table>
+    </div>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    // 表示全选，默认不勾选
+                    isCheckedAll: false,
+                    // 商品
+                    heroArr: [
+                        { id: 1, name: "疾风剑豪", price: 6300, count: 1, isChecked: false },
+                        { id: 2, name: "武器大师", price: 3150, count: 1, isChecked: false },
+                        { id: 3, name: "蛮族之王", price: 4800, count: 1, isChecked: false },
+                        { id: 4, name: "暗裔剑魔", price: 6300, count: 1, isChecked: false }
+                    ]
+                }
+            },
+            methods: {
+                // 全选
+                checkedAllFn() {
+                    for (let i in this.heroArr) {
+                        this.heroArr[i].isChecked = this.isCheckedAll;
+                    }
+                },
+                // 所有商品勾选时，全选也打勾
+                singleCheckFn() {
+                    // every() ：数组中每一个对象都符合条件，则返回 true ，只要有一个对象不符合条件就返回 false
+                    this.isCheckedAll = this.heroArr.every(function (item) {
+                        // 如果数组每一项都返回 true，则 every() 结果为 true
+                        return item.isChecked;
+                    });
+                },
+                // 删除购物车中的商品，勾选的不能删除，只能删除未选中的商品
+                del(index) {
+                    if (!this.heroArr[index].isChecked) {
+                        this.heroArr.splice(index, 1);
+                    }
+                }
+            },
+            computed: {
+                // 计算选中商品的总价格
+                totalPrice() {
+                    let totalPrice = 0;
+                    for (let i in this.heroArr) {
+                        if (this.heroArr[i].isChecked) {
+                            totalPrice += this.heroArr[i].price * this.heroArr[i].count;
+                        }
+                    }
+                    return totalPrice;
+                }
+            }
+        });
+        app.mount("#app");
+    </script>
+</body>
+
+</html>

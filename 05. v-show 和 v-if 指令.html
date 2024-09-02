@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./vue/vue.js"></script>
+    <style>
+        .box {
+            margin-top: 20px;
+            width: 200px;
+            height: 200px;
+            background-color: #fa0;
+        }
+
+        .box2 {
+            margin-top: 20px;
+            width: 200px;
+            height: 200px;
+            background-color: #f0a;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 视图区域：用于展示数据的页面基本结构 -->
+    <div id="app">
+        <!--  
+            v-show 和 v-if 都是控制标签的显示和隐藏的指令，其中 true 是显示标签，false 是隐藏标签。
+              v-show ：底层是采用行内样式，添加 display；none; 实现标签的隐藏，但是依然存在 html 结构中。
+              v-if ：底层是控制 html 的结果，当值为 false 时，直接将标签删除。
+
+              如果标签的隐藏和显示切换频率非常高，建议使用 v-show，但是安全性不高，因为能在浏览器后台进行修改。
+              如果标签的隐藏和显示切换频率较低，建议使用 v-if，安全性高，但是性能较低。
+
+        -->
+        <button v-on:click="isShow=!isShow">显示或隐藏</button>
+        <div class="box" v-show="isShow"></div>
+        <div class="box2" v-if="isShow"></div>
+    </div>
+    <script>
+        // 创建 Vue 实例
+        const app = Vue.createApp({
+            data() {
+                return {
+                    isShow: true
+                }
+            }
+        });
+        // 将 Vue 与页面绑定
+        app.mount("#app");
+    </script>
+</body>
+
+</html>

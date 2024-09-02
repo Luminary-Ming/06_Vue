@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./vue/vue.js"></script>
+</head>
+
+<body>
+    <!-- 视图区域：用于展示数据的页面基本结构 -->
+    <div id="app">
+        <dl>
+            <!--
+                在 Vue 组件中有一个虚拟的标签 <template></template> 他不会在页面上显示，
+                但是可以配合 Vue 中的指令去完成某个结构的渲染。
+            -->
+            <template v-for="item in news">
+                <dt>{{ item.title }}</dt>
+                <dd v-for="sub in item.subTitle">{{ sub }}</dd>
+            </template>
+        </dl>
+        <!-- 
+            v-for="value in 数组或对象"
+            v-for="(value, index/key) in 数组或对象"
+
+            在使用 v-for 遍历时，一般需要配合 v-bind:key 属性一起使用，提高二次渲染的性能。
+
+            在改变渲染出来的DOM结构时，会触发所有元素的重新渲染，当数据过大时，可能会造成性能负担。
+            因此当我们在使用v-for进行渲染时，尽可能使用渲染元素自身属性的id给渲染的元素绑定一个key值，
+            这样在当前渲染元素的DOM结构发生变化时，能够单独响应该元素而不触发所有元素的渲染。
+            这允许 Vue 高效地重用和重新排序已存在的元素，而不是总是销毁和重新创建它们。
+
+            如果列表项中包含状态（如输入字段的值）或子组件，且没有使用 v-bind:key，那么当数据顺序变化时，
+            Vue 可能无法正确地跟踪哪些元素保持不变，哪些元素是新的。这可能导致状态被错误地重置或重用。
+        -->
+
+        <!-- 遍历数组 -->
+        <p v-for="value in arr">{{ value }}</p>
+        <p v-for="(value, index) in arr" v-bind:key="index">{{ value }}---{{ index}}</p>
+
+        <!-- 遍历对象 -->
+        <p v-for="value in person" v-bind:key="index">{{ value }}</p>
+        <p v-for="(value, key) in person" v-bind:key="index">{{ value }}---{{ key }}</p>
+
+        <!-- 做一个普通的for循环， -->
+        <h3 v-for="i in 10">{{ i }}</h3>
+
+
+    </div>
+    <script>
+        // 创建 Vue 实例
+        const app = Vue.createApp({
+            data() {
+                return {
+                    news: [
+                        { title: "我好似生命长河中的一条小鱼", subTitle: ["仙尊驾到", "仙尊来也", "仙尊去也"] },
+                        { title: "命运的风浪总是不尽人意", subTitle: ["仙尊大成", "仙尊超神", "仙尊成魔"] }
+                    ],
+                    arr: [11, 22, 33, 44, 55],
+                    person: {
+                        name: "亚索",
+                        age: 20,
+                        type: "中单刺客",
+                        address: "艾欧尼亚"
+                    }
+                }
+            }
+        });
+        // 将 Vue 与页面绑定
+        app.mount("#app");
+    </script>
+</body>
+
+</html>
