@@ -52,6 +52,12 @@
     <div id="app">
         <table>
             <tr>
+                <!--  
+                    click 事件和 change 事件的区别：
+                        click 事件触发是在点击的那一刻，而change事件是在改变状态之后触发。
+                        click ：点击之后，视图绑定的数据还没有更新到 data 里，就已经执行事件函数了
+                        change ：视图绑定的数据已经在 data 里完成更新，才会去执行事件函数。
+                -->
                 <th><input type="checkbox" v-model="isCheckedAll" @change="checkedAllFn()"></th>
                 <th>名称</th>
                 <th>价格</th>
