@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./vue/vue.js"></script>
+</head>
+
+<body>
+    <!-- 视图区域：用于展示数据的页面基本结构 -->
+    <div id="app">
+        <div class="box"></div>
+        <p>{{ num }}</p>
+        <button @click="num++">num++</button>
+    </div>
+    <script>
+        // 创建 Vue 实例
+        const app = Vue.createApp({
+            data() {
+                return {
+                    num: 0
+                }
+            },
+            // Vue 生命周期的四个阶段 8 个函数
+            beforeCreate() {
+                console.log("box", document.querySelector(".box"));  // null
+                console.log("Vue 实例被创建，正在初始化中");
+            },
+
+            // 经常这这个周期写 ajax 代码
+            created() {
+                console.log("box", document.querySelector(".box"));  // null
+                console.log("Vue 实例创建完成，初始化完毕");
+            },
+
+            beforeMount() {
+                console.log("box", document.querySelector(".box"));  // null
+                console.log("虚拟 dom 即将挂载到页面上");
+            },
+
+            mounted() {
+                console.log("box", document.querySelector(".box"));  // <div class="box"></div>
+                console.log("dom 挂载完成，页面已经渲染完成");
+            },
+
+            beforeUpdate() {
+                console.log("数据更新， Vue 内部正在处理数据");
+            },
+
+            updated() {
+                console.log("新的数据已经处理完成，并且渲染到了页面上");
+            },
+
+            beforeUnmount() {
+                console.log("Vue 实例即将被销毁");
+            },
+
+            unmounted() {
+                console.log("Vue 实例已经被销毁");
+            },
+        });
+        // 将 Vue 与页面绑定
+        app.mount("#app");
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./vue/vue.js"></script>
+</head>
+
+<body>
+    <!-- 视图区域：用于展示数据的页面基本结构 -->
+    <div id="app">
+        <p>{{ user.name }}&ensp;{{ user.age }}</p>
+        <p>{{ user.friend.name }}&ensp;{{ user.friend.age}}</p>
+        <button @click="addAge">年龄+1</button>
+    </div>
+    <script>
+        // 创建 Vue 实例
+        const app = Vue.createApp({
+            data() {
+                return {
+                    user: {
+                        name: "亚索",
+                        age: 20,
+                        friend: {
+                            name: "盲僧",
+                            age: 18
+                        }
+                    }
+                }
+            },
+            methods: {
+                addAge() {
+                    this.user.age++;
+                }
+            },
+            watch: {
+                /*
+                    深度监听：
+                        watch 默认只能监听浅层的数据变化，并触发回调函数，
+                        而嵌套属性（内层属性）的变化不会触发回调函数。
+                */
+                // 如果需要监听对象中的某个指定的属性变量，可以采用字符串的方式书写监听器函数名
+                "user.age"() { },
+                user: {
+                    handler: function (newValue, oldValue) {
+                        console.log(newValue);
+                    },
+                    // 深度监听
+                    deep: true
+                }
+            }
+        });
+        // 将 Vue 与页面绑定
+        app.mount("#app");
+    </script>
+</body>
+
+</html>

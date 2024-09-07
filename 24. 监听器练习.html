@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./vue/vue.js"></script>
+</head>
+
+<body>
+    <!-- 视图区域：用于展示数据的页面基本结构 -->
+    <div id="app">
+        <!-- 练习：根据输入姓氏，筛选对应的姓名，渲染在页面上 -->
+        请输入姓氏：<input type="text" v-model="name">
+        <h3>符合条件的姓名：</h3>
+        <p v-for="item in newNames">{{ item }}</p>
+
+    </div>
+    <script>
+        // 创建 Vue 实例
+        const app = Vue.createApp({
+            data() {
+                return {
+                    // 姓氏
+                    name: "",
+                    // 姓名数组
+                    names: ["张三", "李四", "王五", "张三丰", "张翠山", "李逵", "王麻子", "李峰"],
+                    // 渲染在页面上的姓名结果
+                    newNames: []
+                }
+            },
+            // Vue 中的监听器，监听 Vue 实例中数据的变化
+            watch: {
+                name(newValue) {
+                    // 清空上一次查询的结果
+                    this.newNames.splice(0, this.newNames.length);
+                    // 遍历 names 数组
+                    for (let i in this.names) {
+                        // 如果以 newValue 开头
+                        if (this.names[i].startsWith(newValue)) {
+                            // 符合条件的存到 newNames 数组里
+                            this.newNames.push(this.names[i]);
+                        }
+                    }
+                }
+            }
+        });
+        // 将 Vue 与页面绑定
+        app.mount("#app");
+    </script>
+</body>
+
+</html>
